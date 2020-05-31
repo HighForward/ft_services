@@ -14,6 +14,10 @@ then
     clear_all
     printf "All minikube's data cleared"
     exit 0
+elif [ "$1" = "-space" ]
+then
+    du -hd1 ~ | sort -h
+    exit 0
 fi
 
 if ! minikube status >/dev/null 2>&1
@@ -39,13 +43,16 @@ eval $(minikube docker-env)
 docker build -t nginx_highforward srcs/nginx
 docker build -t mysql_highforward srcs/mysql
 docker build -t phpmyadmin_highforward srcs/phpmyadmin
+docker build -t wordpress_highforward srcs/wordpress
 
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/ingress.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
+kubectl apply -f srcs/wordpress.yaml
 
 printf "UP ! > IP = $IP_ADDRESS\n"
 
-#CONNEXION SSH : user@ip -p 30001 | pass = pass
-#PHPMYADMIN : Utilisateur : admin | pass = pass
+#CONNEXION SSH : user@ip -p 30001       | Password = pass
+#PHPMYADMIN    : Utilisateur : admin    | Password = pass
+#WORDPRESS     : Utilisateur : forward  | Password = pass

@@ -32,5 +32,5 @@ spec:
         - name: phpmyadmin
           image: phpmyadmin_highforward
           ports:
-            - containerPort: 50000
+            - containerPort: 5000
           imagePullPolicy: Never

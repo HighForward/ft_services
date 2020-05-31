@@ -1,3 +1,3 @@
 #!/bin/bash
 
-php -S 0.0.0.0:5000 -t /www/
+php -S 0.0.0.0:5000 -t /www
