@@ -39,20 +39,25 @@ then
 	IP_ADDRESS="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 fi
 
+echo $IP_ADDRESS > srcs/ftps/IP_MINIKUBE
+
 eval $(minikube docker-env)
 docker build -t nginx_highforward srcs/nginx
 docker build -t mysql_highforward srcs/mysql
 docker build -t phpmyadmin_highforward srcs/phpmyadmin
 docker build -t wordpress_highforward srcs/wordpress
+docker build -t ftps_highforward srcs/ftps
 
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/ingress.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/wordpress.yaml
+kubectl apply -f srcs/ftps.yaml
 
 printf "UP ! > IP = $IP_ADDRESS\n"
 
 #CONNEXION SSH : user@ip -p 30001       | Password = pass
 #PHPMYADMIN    : Utilisateur : admin    | Password = pass
 #WORDPRESS     : Utilisateur : forward  | Password = pass
+#FTP           : Utilisteur  : admin    | Password = pass

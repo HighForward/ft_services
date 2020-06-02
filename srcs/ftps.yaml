@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps-service
+  labels:
+    app: ftps-app
+spec:
+  type: NodePort
+  ports:
+    - port: 21
+      name: ftps
+    - port: 21000
+      name: ftps-data
+  selector:
+    app: ftps-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps-app
+  template:
+    metadata:
+      labels:
+        app: ftps-app
+    spec:
+      containers:
+        - name: ftps
+          image: ftps_highforward
+          ports:
+            - containerPort: 21
+              hostPort: 21
+            - containerPort: 21000
+              hostPort: 21000
+          imagePullPolicy: Never

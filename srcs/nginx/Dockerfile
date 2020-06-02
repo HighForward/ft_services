@@ -1,9 +1,9 @@
 FROM alpine:latest
 
-RUN apk update && apk add nginx openssh && apk add ca-certificates
+RUN apk update && apk add nginx openssh ca-certificates
 RUN adduser -D -g 'user' user
 RUN chown -R user:user /var/lib/nginx
-RUN rm -f /etc/nginx/nginx.conf && rm -rf /var/cache/apk/*
+RUN rm -f /etc/nginx/nginx.conf
 RUN mkdir -p /var/run/nginx
 
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -14,4 +14,4 @@ COPY init.sh /init.sh
 
 ENTRYPOINT sh /init.sh
 
-EXPOSE 80 30001
+EXPOSE 80 443 30001
