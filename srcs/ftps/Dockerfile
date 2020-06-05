@@ -11,7 +11,8 @@ RUN apk add openssl
 RUN mkdir -p /etc/ssl/private
 RUN mv /pure-ftpd.pem /etc/ssl/private
 RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
+RUN rm -rf /var/cache/apk/*
 
 ENTRYPOINT sh /init.sh
 
-EXPOSE 21
+EXPOSE 21 21000

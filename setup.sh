@@ -47,6 +47,8 @@ docker build -t mysql_highforward srcs/mysql
 docker build -t phpmyadmin_highforward srcs/phpmyadmin
 docker build -t wordpress_highforward srcs/wordpress
 docker build -t ftps_highforward srcs/ftps
+docker build -t grafana_highforward srcs/grafana
+docker build -t influxdb_highforward srcs/influxdb
 
 kubectl apply -f srcs/nginx.yaml
 kubectl apply -f srcs/ingress.yaml
@@ -54,10 +56,12 @@ kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/wordpress.yaml
 kubectl apply -f srcs/ftps.yaml
+kubectl apply -f srcs/grafana.yaml
+kubectl apply -f srcs/influxdb.yaml
 
 printf "UP ! > IP = $IP_ADDRESS\n"
 
 #CONNEXION SSH : user@ip -p 30001       | Password = pass
 #PHPMYADMIN    : Utilisateur : admin    | Password = pass
 #WORDPRESS     : Utilisateur : forward  | Password = pass
-#FTP           : Utilisteur  : admin    | Password = pass
+#FTP           : Utilisteur  : user     | Password = pass

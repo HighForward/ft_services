@@ -6,20 +6,21 @@ metadata:
     app: ftps-app
 spec:
   type: NodePort
+  selector:
+    app: ftps-app
   ports:
     - port: 21
       name: ftps
     - port: 21000
       name: ftps-data
-  selector:
-    app: ftps-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ftps-deployment
+  labels:
+    app: ftps-app
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: ftps-app
