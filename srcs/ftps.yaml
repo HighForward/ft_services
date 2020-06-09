@@ -6,8 +6,6 @@ metadata:
     app: ftps-app
 spec:
   type: NodePort
-  selector:
-    app: ftps-app
   ports:
     - port: 21
       name: ftps
@@ -18,8 +16,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ftps-deployment
-  labels:
-    app: ftps-app
 spec:
   selector:
     matchLabels:

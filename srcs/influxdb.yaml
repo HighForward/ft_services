@@ -13,6 +13,33 @@ spec:
   selector:
     app: influxdb-app
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influxdb-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data_influxdb"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,9 +54,16 @@ spec:
       labels:
         app: influxdb-app
     spec:
+      volumes:
+        - name: influxdb-pv-storage
+          persistentVolumeClaim:
+            claimName: influxdb-pv-claim
       containers:
         - name: influxdb
           image: influxdb_highforward
           ports:
             - containerPort: 8086
           imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/lib/influxdb
+              name: influxdb-pv-storage

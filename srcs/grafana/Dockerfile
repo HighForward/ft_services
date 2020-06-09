@@ -9,6 +9,8 @@ RUN tar xfz grafana-7.0.0.linux-amd64.tar.gz
 RUN rm grafana-7.0.0.linux-amd64.tar.gz
 RUN chmod 755 init.sh
 
+COPY grafana.db grafana-7.0.0/data/grafana.db
+
 ENTRYPOINT /init.sh
 
 EXPOSE 3000
